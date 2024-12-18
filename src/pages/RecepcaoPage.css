@@ -1,0 +1,228 @@
+/* Reset padrão */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background-color: #ffffff;
+  color: #000000;
+}
+
+
+.nome-logo {
+  color: #ffcc00; /* Cor amarela para o nome "Pneu Forte" */
+  font-size: 32px;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+
+
+/* Configuração das cores principais */
+:root {
+  --cor-principal: #000000; /* Preto */
+  --cor-secundaria: #ffcc00; /* Amarelo */
+}
+.logo-carros-container {
+  text-align: center;
+  margin-bottom: 20px;
+  margin-top: -20px;
+}
+
+.logo-carros {
+  width: 500px;
+  height: auto;
+}
+/* Estilos do Container Principal */
+.recepcao-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  background-color: #ffffff;
+}
+
+/* Header - Logo no topo */
+.header {
+  background-color: var(--cor-principal);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px 0;
+}
+
+.logo {
+  width: 150px;
+}
+
+/* Conteúdo Principal */
+.main-content {
+  display: flex;
+  flex: 1;
+  background-color: #ffffff;
+}
+
+/* Vídeo */
+.video-container {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #e6e6e6;
+}
+
+.video {
+  max-width: 100%;
+  height: auto;
+  border-radius: 10px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3);
+}
+
+/* Colunas Laterais */
+.side-columns {
+  display: flex;
+  flex-direction: row; 
+  width: 30%;
+  background-color: var(--cor-principal);
+  color: #ffffff;
+}
+
+/* Coluna 1 - Carros em Atendimento */
+.column.carros {
+  flex: 1;
+  padding: 20px;
+  border-right: 2px solid #00582b;
+}
+
+
+.column h2 {
+  text-align: center;
+  font-size: 40px;
+  margin-bottom: 15px;
+  text-transform: uppercase;
+  color: var(--cor-secundaria);
+  font-weight: bold;
+}
+
+/* Remover marcadores de lista */
+ul {
+  list-style-type: none;
+}
+
+/* Estilos dos Carros */
+.car-item {
+  padding: 15px;
+  font-size: 24px; /* Aumentando o tamanho da fonte */
+  border: 1px solid #00fff2;
+  border-radius: 8px;
+  margin-bottom: 10px;
+  text-align: center;
+  color: #ffffff;
+  transition: transform 0.2s ease-in-out;
+  font-weight: bold;
+}
+
+.car-item:hover {
+  transform: scale(1.03);
+}
+
+.car-item .andamento {
+  display: block;
+  font-size: 22px; /* Tamanho do texto "EM ANDAMENTO" */
+  color: red;
+  font-weight: bold;
+  animation: piscar 1s infinite;
+}
+
+@keyframes piscar {
+  0% { opacity: 1; }
+  50% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+/* Estilo do Carro Finalizado */
+.car-item.finalizado {
+  transform: scale(1.2); /* Zoom no carro finalizado */
+  transition: transform 0.5s ease-in-out;
+  border: 2px solid #ffcc00;
+}
+
+.modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: rgba(0, 0, 0, 0.7);
+  color: white;
+  padding: 20px;
+  border-radius: 10px;
+  display: none;
+  opacity: 0;
+  z-index: 9999;
+  text-align: center;
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.modal.show {
+  display: block;
+  opacity: 1;
+}
+
+.modal.animacao {
+  transform: translate(-50%, -50%) scale(1.1);
+}
+
+.car-item.finalizado {
+  opacity: 0.5;
+  text-decoration: line-through;
+}
+
+
+/* Rodapé */
+.footer {
+  background-color: var(--cor-principal);
+  color: var(--cor-secundaria);
+  text-align: center;
+  padding: 15px;
+  font-size: 18px;
+}
+
+.bemvindo {
+  font-weight: bold;
+  color: var(--cor-secundaria);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+  .main-content {
+    flex-direction: column;
+  }
+
+  .side-columns {
+    width: 100%;
+    flex-direction: row;
+  }
+
+  .column {
+    flex: 1;
+    border-bottom: none;
+    border-right: 2px solid #00582b;
+  }
+
+  .column:last-child {
+    border-right: none;
+  }
+
+  .car-item,
+  .servico-item {
+    font-size: 18px;
+  }
+
+  .logo {
+    width: 120px;
+  }
+}
