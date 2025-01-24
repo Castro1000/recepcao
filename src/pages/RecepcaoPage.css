@@ -11,7 +11,6 @@ body {
   color: #000000;
 }
 
-
 .nome-logo {
   color: #ffcc00; /* Cor amarela para o nome "Pneu Forte" */
   font-size: 32px;
@@ -19,13 +18,12 @@ body {
   text-transform: uppercase;
 }
 
-
-
 /* Configuração das cores principais */
 :root {
   --cor-principal: #000000; /* Preto */
   --cor-secundaria: #ffcc00; /* Amarelo */
 }
+
 .logo-carros-container {
   text-align: center;
   margin-bottom: 20px;
@@ -36,6 +34,7 @@ body {
   width: 500px;
   height: auto;
 }
+
 /* Estilos do Container Principal */
 .recepcao-container {
   display: flex;
@@ -66,24 +65,17 @@ body {
 
 /* Vídeo */
 .video-container {
-  flex: 1;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: #e6e6e6;
+  position: relative; /* Para permitir o posicionamento absoluto do card */
 }
 
 .video {
-  max-width: 100%;
+  width: 100%; /* Faz o vídeo ocupar toda a largura disponível */
   height: auto;
-  border-radius: 10px;
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3);
 }
-
 /* Colunas Laterais */
 .side-columns {
   display: flex;
-  flex-direction: row; 
+  flex-direction: row;
   width: 30%;
   background-color: var(--cor-principal);
   color: #ffffff;
@@ -95,7 +87,6 @@ body {
   padding: 20px;
   border-right: 2px solid #00582b;
 }
-
 
 .column h2 {
   text-align: center;
@@ -137,48 +128,50 @@ ul {
 }
 
 @keyframes piscar {
-  0% { opacity: 1; }
-  50% { opacity: 0; }
-  100% { opacity: 1; }
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
 }
 
-/* Estilo do Carro Finalizado */
-.car-item.finalizado {
-  transform: scale(1.2); /* Zoom no carro finalizado */
-  transition: transform 0.5s ease-in-out;
-  border: 2px solid #ffcc00;
-}
-
-.modal {
-  position: fixed;
+/* Card de carro finalizado */
+.car-finalizado {
+  position: absolute;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%);
-  background-color: rgba(0, 0, 0, 0.7);
+  transform: translate(-50%, -50%); /* Centraliza o card */
+  background-color: rgba(0, 0, 0, 0.7); /* Fundo semitransparente */
   color: white;
   padding: 20px;
   border-radius: 10px;
-  display: none;
-  opacity: 0;
-  z-index: 9999;
+  z-index: 10; /* Garante que o card fique sobre o vídeo */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5); /* Adiciona sombra ao card */
+  animation: fadeInOut 20s ease-out forwards; /* Animação para desaparecer após 20 segundos */
+}
+
+@keyframes fadeInOut {
+  0% {
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+footer .message {
   text-align: center;
-  transition: opacity 0.5s ease, transform 0.5s ease;
 }
-
-.modal.show {
-  display: block;
-  opacity: 1;
-}
-
-.modal.animacao {
-  transform: translate(-50%, -50%) scale(1.1);
-}
-
-.car-item.finalizado {
-  opacity: 0.5;
-  text-decoration: line-through;
-}
-
 
 /* Rodapé */
 .footer {
@@ -220,9 +213,5 @@ ul {
   .car-item,
   .servico-item {
     font-size: 18px;
-  }
-
-  .logo {
-    width: 120px;
   }
 }

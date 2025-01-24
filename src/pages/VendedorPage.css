@@ -198,13 +198,58 @@ input:focus {
 
 /* Estilo de erro */
 p {
-  font-size: 1rem;
-  color: red;
+  font-size: 70px;
+  color: rgb(251, 255, 0);
   text-align: center;
   margin-top: 10px;
   font-weight: bold;
-  animation: blink 1s infinite;
+
 }
+.car-finalizado {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(1);
+  background: linear-gradient(to right, #1e201e, #070505, #6d0000); /* Gradiente preto, branco e vermelho */
+  color: #ffffff; /* Texto branco */
+  padding: 50px; /* Espaçamento interno */
+  font-size: 36px; /* Texto maior para destaque */
+  font-weight: bold;
+  text-align: center;
+  border-radius: 12px; /* Bordas arredondadas */
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.8); /* Sombra fixa para efeito 3D */
+  z-index: 9999; /* Para aparecer na frente de tudo */
+  border: 10px solid #28a745; /* Borda inicial em verde */
+  animation: zoom-in 0.5s ease-in-out, border-blink 1.5s infinite; /* Animações de zoom e borda piscando */
+}
+
+/* Animação de zoom ao aparecer */
+@keyframes zoom-in {
+  0% {
+    transform: translate(-50%, -50%) scale(0.5);
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+/* Animação para o contorno (borda) piscando */
+@keyframes border-blink {
+  0% {
+    border-color: #28a745; /* Verde brilhante */
+    box-shadow: 0 0 15px #28a745; /* Sombra verde no contorno */
+  }
+  50% {
+    border-color: #ffffff; /* Branco */
+    box-shadow: 0 0 15px #ffffff; /* Sombra branca no contorno */
+  }
+  100% {
+    border-color: #28a745; /* Volta para verde */
+    box-shadow: 0 0 15px #28a745; /* Volta para sombra verde */
+  }
+}
+
+
 
 .finalizar-btn {
   margin-left: 8px;

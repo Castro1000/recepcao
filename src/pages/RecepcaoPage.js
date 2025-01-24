@@ -1,31 +1,18 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect } from 'react';
 import './RecepcaoPage.css';
 import ClientesContext from './ClientesContext';
 
 function RecepcaoPage() {
-  const { clientes, error } = useContext(ClientesContext);
-  const [carrosEmServico, setCarrosEmServico] = useState([]);
-  const [carroFinalizado, setCarroFinalizado] = useState(null);
-  const [mostrarModal, setMostrarModal] = useState(false);
-  const [modalAnimacao, setModalAnimacao] = useState(false);
+  const { clientes, error, carroFinalizado, showModal, setShowModal } = useContext(ClientesContext);
 
   useEffect(() => {
-    setCarrosEmServico(clientes);
-  }, [clientes]);
-
-  const finalizarCarro = (cliente) => {
-    setCarroFinalizado(cliente);
-    setMostrarModal(true);
-    setModalAnimacao(true);
-
-    setTimeout(() => {
-      setMostrarModal(false);
-      setModalAnimacao(false);
-      setCarrosEmServico((prevCarros) =>
-        prevCarros.filter((carro) => carro !== cliente)
-      );
-    }, 2000);
-  };
+    if (showModal) {
+      const timer = setTimeout(() => {
+        setShowModal(false);
+      }, 40000); // Fechar modal após 40 segundos
+      return () => clearTimeout(timer);
+    }
+  }, [showModal, setShowModal]);
 
   return (
     <div className="recepcao-container">
@@ -34,21 +21,30 @@ function RecepcaoPage() {
       </header>
 
       <div className="main-content">
-        {/* Vídeo começa automaticamente */}
         <div className="video-container">
-          <video
-            id="video"
-            className="video"
-            autoPlay
-            muted
-            loop
-            playsInline // Importante para dispositivos móveis
-          >
-            <source src="video.mp4" type="video/mp4" />
-            Seu navegador não suporta o vídeo.
-          </video>
+          {!showModal && (
+            <video
+              id="video"
+              className="video"
+              autoPlay
+              muted
+              loop
+              playsInline
+            >
+              <source src="video.mp4" type="video/mp4" />
+              Seu navegador não suporta o vídeo.
+            </video>
+          )}
+          {showModal && carroFinalizado && (
+            <div className="car-finalizado">
+              <h2>{`Carro Finalizado: ${carroFinalizado.modelo} - ${carroFinalizado.placa.slice(-4)}`}</h2>
+              <p>{`Cor: ${carroFinalizado.cor}`}</p>
+              <p>Carro pronto para retirada!</p>
+            </div>
+          )}
         </div>
 
+        {/* Lista de carros em atendimento */}
         <div className="side-columns">
           <div className="column carros">
             <div className="logo-carros-container">
@@ -61,11 +57,8 @@ function RecepcaoPage() {
                 clientes.map((cliente, index) => (
                   <li
                     key={index}
-                    className={`car-item ${
-                      cliente === carroFinalizado ? 'finalizado' : ''
-                    }`}
+                    className="car-item"
                     style={{ backgroundColor: cliente.cor }}
-                    onClick={() => finalizarCarro(cliente)}
                   >
                     {cliente.modelo} - {cliente.placa.slice(-4)} - {cliente.cor}
                     <span className="andamento"> EM ANDAMENTO</span>
@@ -78,15 +71,6 @@ function RecepcaoPage() {
           </div>
         </div>
       </div>
-
-      {mostrarModal && (
-        <div className={`modal ${modalAnimacao ? 'animacao' : ''}`}>
-          <h2>Agora é a sua vez!</h2>
-          <p>
-            {carroFinalizado.modelo} - {carroFinalizado.placa} está pronto!
-          </p>
-        </div>
-      )}
 
       <footer className="footer">
         <div className="message">
