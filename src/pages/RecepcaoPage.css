@@ -7,12 +7,13 @@
 
 body {
   font-family: Arial, sans-serif;
-  background-color: #ffffff;
+  background-color: #ffcc00;
   color: #000000;
+  overflow: hidden; /* Impede que o fundo role quando o modal estiver aberto */
 }
 
 .nome-logo {
-  color: #ffcc00; /* Cor amarela para o nome "Pneu Forte" */
+  color: #ffcc00;
   font-size: 32px;
   font-weight: bold;
   text-transform: uppercase;
@@ -20,8 +21,8 @@ body {
 
 /* Configuração das cores principais */
 :root {
-  --cor-principal: #000000; /* Preto */
-  --cor-secundaria: #ffcc00; /* Amarelo */
+  --cor-principal: #070505;
+  --cor-secundaria: #ffcc00;
 }
 
 .logo-carros-container {
@@ -60,37 +61,57 @@ body {
 .main-content {
   display: flex;
   flex: 1;
-  background-color: #ffffff;
+  background-color: #ffcc00;
 }
 
-/* Vídeo */
+/* Ajuste da Coluna de Atendimento e Vídeo */
 .video-container {
-  position: relative; /* Para permitir o posicionamento absoluto do card */
+  flex: 1;
+  display: flex;
+  align-items: center; /* Centraliza verticalmente */
+  justify-content: center; /* Centraliza horizontalmente */
+  width: 40%;
+  height: 100%;
 }
 
+/* O vídeo ocupa um espaço fixo sem esticar */
 .video {
-  width: 100%; /* Faz o vídeo ocupar toda a largura disponível */
-  height: auto;
+  width: 100%;
+  max-height: 700px; /* Ajuste para manter um tamanho fixo */
+  object-fit: contain; /* Garante que o vídeo não estique */
 }
-/* Colunas Laterais */
+
+/* Coluna da Fila de Atendimento mais larga */
 .side-columns {
   display: flex;
   flex-direction: row;
-  width: 30%;
+  width: 45%; /* Aumentando a largura da lista */
   background-color: var(--cor-principal);
   color: #ffffff;
 }
 
-/* Coluna 1 - Carros em Atendimento */
+/* Estilização da lista de atendimento */
 .column.carros {
   flex: 1;
-  padding: 20px;
+  padding: 10px;
   border-right: 2px solid #00582b;
+  max-height: 80vh; /* Evita que a lista ultrapasse o limite da tela */
+  overflow-y: auto; /* Adiciona scroll quando precisar */
+}
+
+/* Oculta a barra de rolagem no Chrome e Safari */
+.column.carros::-webkit-scrollbar {
+  width: 15px;
+}
+
+.column.carros::-webkit-scrollbar-thumb {
+  background: #ffcc00;
+  border-radius: 10px;
 }
 
 .column h2 {
   text-align: center;
-  font-size: 40px;
+  font-size: 35px;
   margin-bottom: 15px;
   text-transform: uppercase;
   color: var(--cor-secundaria);
@@ -100,12 +121,17 @@ body {
 /* Remover marcadores de lista */
 ul {
   list-style-type: none;
+  padding: 0;
+  
 }
 
-/* Estilos dos Carros */
+/* Ajuste dos itens da fila para caberem em uma linha */
 .car-item {
-  padding: 15px;
-  font-size: 24px; /* Aumentando o tamanho da fonte */
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 15px 25px;
+  font-size: 45px;
   border: 1px solid #00fff2;
   border-radius: 8px;
   margin-bottom: 10px;
@@ -113,6 +139,9 @@ ul {
   color: #ffffff;
   transition: transform 0.2s ease-in-out;
   font-weight: bold;
+  white-space: nowrap; /* Evita quebra de linha */
+  overflow: hidden;
+  text-overflow: ellipsis; /* Adiciona "..." caso o texto fique muito longo */
 }
 
 .car-item:hover {
@@ -120,11 +149,11 @@ ul {
 }
 
 .car-item .andamento {
-  display: block;
-  font-size: 22px; /* Tamanho do texto "EM ANDAMENTO" */
+  font-size: 20px;
   color: red;
   font-weight: bold;
   animation: piscar 1s infinite;
+  margin-left: 15px;
 }
 
 @keyframes piscar {
@@ -139,38 +168,46 @@ ul {
   }
 }
 
-/* Card de carro finalizado */
+/* Estilos do Modal */
 .car-finalizado {
-  position: absolute;
+  position: fixed;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%); /* Centraliza o card */
-  background-color: rgba(0, 0, 0, 0.7); /* Fundo semitransparente */
+  transform: translate(-50%, -50%);
+  background: linear-gradient(to right, #070505, #070505, #070505);
   color: white;
-  padding: 20px;
-  border-radius: 10px;
-  z-index: 10; /* Garante que o card fique sobre o vídeo */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5); /* Adiciona sombra ao card */
-  animation: fadeInOut 20s ease-out forwards; /* Animação para desaparecer após 20 segundos */
+  padding: 40px;
+  border-radius: 12px;
+  z-index: 1000;
+  width: 80%;
+  max-width: 600px;
+  text-align: center;
+  font-size: 24px;
+  font-weight: bold;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.8);
+  animation: zoom-in 0.5s ease-in-out;
 }
 
-@keyframes fadeInOut {
+/* Efeito de zoom ao abrir */
+@keyframes zoom-in {
   0% {
-    opacity: 0;
-  }
-  10% {
-    opacity: 1;
-  }
-  90% {
-    opacity: 1;
+    transform: translate(-50%, -50%) scale(0.5);
   }
   100% {
-    opacity: 0;
+    transform: translate(-50%, -50%) scale(1);
   }
 }
 
-footer .message {
-  text-align: center;
+/* Fundo escuro ao abrir o modal */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  z-index: 999;
+  backdrop-filter: blur(5px); /* Dá um efeito de desfoque no fundo */
 }
 
 /* Rodapé */
@@ -190,28 +227,64 @@ footer .message {
 }
 
 /* Responsividade */
-@media (max-width: 768px) {
+@media (max-width: 1024px) {
   .main-content {
     flex-direction: column;
   }
 
+  .video-container {
+    width: 100%;
+    order: 2; /* Para o vídeo ficar abaixo da lista em telas menores */
+  }
+
   .side-columns {
     width: 100%;
-    flex-direction: row;
+    order: 1;
   }
 
-  .column {
-    flex: 1;
-    border-bottom: none;
-    border-right: 2px solid #00582b;
+  .column.carros {
+    text-align: center;
   }
 
-  .column:last-child {
-    border-right: none;
+  .car-item {
+    font-size: 24px;
+    padding: 10px;
   }
 
-  .car-item,
-  .servico-item {
+  .car-item .andamento {
+    font-size: 20px;
+  }
+}
+
+@media (max-width: 768px) {
+  .video-container {
+    width: 100%;
+  }
+
+  .side-columns {
+    width: 100%;
+  }
+
+  .column.carros {
+    text-align: center;
+  }
+
+  .car-item {
     font-size: 18px;
+    padding: 8px;
+  }
+
+  .car-finalizado {
+    width: 90%;
+    font-size: 20px;
+    padding: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .car-finalizado {
+    width: 95%;
+    font-size: 18px;
+    padding: 15px;
   }
 }

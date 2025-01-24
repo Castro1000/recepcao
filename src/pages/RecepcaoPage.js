@@ -9,7 +9,7 @@ function RecepcaoPage() {
     if (showModal) {
       const timer = setTimeout(() => {
         setShowModal(false);
-      }, 40000); // Fechar modal após 40 segundos
+      }, 35000); // O modal desaparece após 40 segundos
       return () => clearTimeout(timer);
     }
   }, [showModal, setShowModal]);
@@ -17,7 +17,7 @@ function RecepcaoPage() {
   return (
     <div className="recepcao-container">
       <header className="header">
-        <h1 className="nome-logo">BEM-VINDO</h1>
+        <h1 className="nome-logo"></h1>
       </header>
 
       <div className="main-content">
@@ -35,12 +35,16 @@ function RecepcaoPage() {
               Seu navegador não suporta o vídeo.
             </video>
           )}
-          {showModal && carroFinalizado && (
-            <div className="car-finalizado">
-              <h2>{`Carro Finalizado: ${carroFinalizado.modelo} - ${carroFinalizado.placa.slice(-4)}`}</h2>
-              <p>{`Cor: ${carroFinalizado.cor}`}</p>
-              <p>Carro pronto para retirada!</p>
-            </div>
+          {showModal && (
+            <>
+              <div className="modal-overlay"></div> {/* Fundo escuro ao ativar modal */}
+              <div className="car-finalizado">
+                <h2>🚗 CARRO FINALIZADO! 🚗</h2>
+                <p><strong>Modelo:</strong> {carroFinalizado.modelo}</p>
+                <p><strong>Placa:</strong> {carroFinalizado.placa}</p>
+                <p><strong>Cor:</strong> {carroFinalizado.cor}</p>
+              </div>
+            </>
           )}
         </div>
 
@@ -51,6 +55,8 @@ function RecepcaoPage() {
               <img src="/pneu.png" alt="Logo" className="logo-carros" />
             </div>
             <h2>Carros em Atendimento</h2>
+          
+            
             <ul>
               {error && <p style={{ color: 'red' }}>{error}</p>}
               {clientes.length > 0 ? (
@@ -74,7 +80,7 @@ function RecepcaoPage() {
 
       <footer className="footer">
         <div className="message">
-          <p className="bemvindo">SEJA BEM-VINDO!</p>
+          <p className="bemvindo">SEJAM BEM-VINDO!</p>
         </div>
       </footer>
     </div>
