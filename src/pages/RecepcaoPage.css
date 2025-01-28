@@ -7,7 +7,7 @@
 
 body {
   font-family: Arial, sans-serif;
-  background-color: #ffcc00;
+  background-color: #000000;
   color: #000000;
   overflow: hidden; /* Impede que o fundo role quando o modal estiver aberto */
 }
@@ -18,6 +18,45 @@ body {
   font-weight: bold;
   text-transform: uppercase;
 }
+
+/* Contêiner do carrossel */
+.logo-marcas-container {
+  width: 100%;
+  overflow: hidden;
+  background-color: var(--cor-principal);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 0;
+  position: relative;
+  white-space: nowrap;
+}
+
+/* Wrapper das logomarcas (repetidas para efeito contínuo) */
+.logo-marcas-wrapper {
+  display: flex;
+  width: max-content;
+  animation: slide 15s linear infinite;
+}
+
+/* Estilização das logomarcas */
+.logo-marca {
+  height: 60px;
+  max-width: 150px;
+  object-fit: contain;
+  margin: 0 20px; /* Espaço entre as imagens */
+}
+
+/* Criando um efeito contínuo de carrossel */
+@keyframes slide {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
 
 /* Configuração das cores principais */
 :root {
@@ -32,8 +71,10 @@ body {
 }
 
 .logo-carros {
-  width: 500px;
+  width: 400px;
   height: auto;
+  background-color: #e2e2e2;
+  margin-top: 15px;
 }
 
 /* Estilos do Container Principal */
@@ -41,16 +82,15 @@ body {
   display: flex;
   flex-direction: column;
   height: 100vh;
-  background-color: #ffffff;
 }
 
 /* Header - Logo no topo */
 .header {
-  background-color: var(--cor-principal);
+  background-color: #ffffff;
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 10px 0;
+  padding: 5px 10px;
 }
 
 .logo {
@@ -61,7 +101,7 @@ body {
 .main-content {
   display: flex;
   flex: 1;
-  background-color: #ffcc00;
+  background-color: #ffcc00f5;
 }
 
 /* Ajuste da Coluna de Atendimento e Vídeo */

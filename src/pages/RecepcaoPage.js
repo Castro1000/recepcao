@@ -9,7 +9,7 @@ function RecepcaoPage() {
     if (showModal) {
       const timer = setTimeout(() => {
         setShowModal(false);
-      }, 35000); // O modal desaparece após 40 segundos
+      }, 40000); // O modal desaparece após 40 segundos
       return () => clearTimeout(timer);
     }
   }, [showModal, setShowModal]);
@@ -17,8 +17,22 @@ function RecepcaoPage() {
   return (
     <div className="recepcao-container">
       <header className="header">
-        <h1 className="nome-logo"></h1>
-      </header>
+  <div className="logo-marcas-container">
+    <div className="logo-marcas-wrapper">
+      {/* Duplicamos as imagens para evitar espaços vazios */}
+      {[...Array(2)].map((_, i) => (
+        <React.Fragment key={i}>
+          <img src="/dunloplogo.png" alt="Marca 1" className="logo-marca" />
+          <img src="/logo.png" alt="Marca 2" className="logo-marca" />
+          <img src="/speed.png" alt="Marca 3" className="logo-marca" />
+          <img src="/triangle.png" alt="Marca 4" className="logo-marca" />
+          <img src="/xbri.png" alt="Marca 5" className="logo-marca" />
+        </React.Fragment>
+      ))}
+    </div>
+  </div>
+</header>
+
 
       <div className="main-content">
         <div className="video-container">
@@ -55,8 +69,6 @@ function RecepcaoPage() {
               <img src="/pneu.png" alt="Logo" className="logo-carros" />
             </div>
             <h2>Carros em Atendimento</h2>
-          
-            
             <ul>
               {error && <p style={{ color: 'red' }}>{error}</p>}
               {clientes.length > 0 ? (
@@ -80,7 +92,7 @@ function RecepcaoPage() {
 
       <footer className="footer">
         <div className="message">
-          <p className="bemvindo">SEJAM BEM-VINDO!</p>
+          <p className="bemvindo">SEJAM BEM-VINDOS!</p>
         </div>
       </footer>
     </div>

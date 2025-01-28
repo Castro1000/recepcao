@@ -28,6 +28,9 @@ export const ClientesProvider = ({ children }) => {
     setCarroFinalizado(carro);
     setShowModal(true); // Exibe o modal
 
+    // Reproduz o áudio na Recepção
+    tocarAudioFinalizacao(carro.modelo, carro.placa, carro.cor);
+
     // Remover o carro finalizado da lista de atendimento
     setClientes((prevClientes) => prevClientes.filter(c => c.id !== carro.id));
 
@@ -36,6 +39,38 @@ export const ClientesProvider = ({ children }) => {
       setShowModal(false);
       setCarroFinalizado(null);
     }, 40000);
+  };
+
+  // Função para tocar áudio de notificação na Recepção
+  const tocarAudioFinalizacao = (modelo, placa, cor) => {
+    const audioCampainha = new Audio(`${process.env.PUBLIC_URL}/campainha.mp3`);
+    const audioVoz = new Audio(`${process.env.PUBLIC_URL}/voz.mp3`);
+
+    let playVoiceCount = 0;
+    const playVoice = () => {
+      if (playVoiceCount < 1) {
+        audioVoz.play().catch(error => console.error("Erro ao reproduzir áudio:", error));
+        playVoiceCount++;
+        audioVoz.onended = playVoice;
+      } else {
+        speakCarData(modelo, placa, cor);
+      }
+    };
+
+    audioCampainha.play().catch(error => console.error("Erro ao reproduzir áudio:", error));
+    audioCampainha.onended = playVoice;
+  };
+
+  // Função para falar os dados do carro via voz
+  const speakCarData = (modelo, placa, cor) => {
+    const speech = new SpeechSynthesisUtterance();
+    speech.text = `Carro: Modelo ${modelo}, Placa ${placa}, Cor ${cor}.`;
+    speech.lang = 'pt-BR';
+    speech.onend = () => {
+      const audioDirijase = new Audio(`${process.env.PUBLIC_URL}/dirijase.mp3`);
+      audioDirijase.play().catch(error => console.error("Erro ao reproduzir áudio:", error));
+    };
+    window.speechSynthesis.speak(speech);
   };
 
   useEffect(() => {
